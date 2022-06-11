@@ -23,6 +23,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.michellebrito.devhub.ui.theme.DevHubTheme
+import coil.compose.rememberImagePainter
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +51,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun SetupUserProfile() {
+    val profileImg = rememberImagePainter(data = "https://avatars.githubusercontent.com/u/70734738?v=4")
+
     Column {
         Box(
             modifier = Modifier
@@ -62,13 +66,14 @@ fun SetupUserProfile() {
                 .height(150.dp)
         ) {
             Image(
-                painterResource(id = R.drawable.ic_account_icon),
+                painter = profileImg,
                 contentDescription = "foto do usuário",
                 modifier = Modifier
                     .offset(y = 80.dp)
                     .border(0.5.dp, MaterialTheme.colors.primary, CircleShape)
                     .size(150.dp)
                     .align(Alignment.BottomCenter)
+                    .clip(CircleShape)
             )
         }
         Spacer(modifier = Modifier.height(75.dp))
