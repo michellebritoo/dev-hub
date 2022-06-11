@@ -4,21 +4,31 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.com.michellebrito.devhub.ui.theme.DevHubTheme
 
 class MainActivity : ComponentActivity() {
@@ -30,11 +40,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ShowDetailsAccount(
-                        name = "Michelle Brito",
-                        userName = "michellebritoo",
-                        description = "Android dev"
-                    )
+                    SetupUserProfile()
                 }
             }
         }
@@ -42,18 +48,48 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ShowDetailsAccount(name: String, userName: String, description: String) {
+fun SetupUserProfile() {
     Column {
-        Image(
-            painter = painterResource(R.drawable.ic_account_icon),
-            contentDescription = "foto do usuário",
+        Box(
             modifier = Modifier
-                .size(60.dp)
-                .border(1.5.dp, MaterialTheme.colors.primary, CircleShape)
+                .fillMaxWidth()
+                .background(
+                    Color.Gray, shape = RoundedCornerShape(
+                        bottomStart = 16.dp,
+                        bottomEnd = 16.dp
+                    )
+                )
+                .height(150.dp)
+        ) {
+            Image(
+                painterResource(id = R.drawable.ic_account_icon),
+                contentDescription = "foto do usuário",
+                modifier = Modifier
+                    .offset(y = 80.dp)
+                    .border(0.5.dp, MaterialTheme.colors.primary, CircleShape)
+                    .size(150.dp)
+                    .align(Alignment.BottomCenter)
+            )
+        }
+        Spacer(modifier = Modifier.height(75.dp))
+        ShowDetailsAccount(
+            name = "Michelle Brito",
+            userName = "michellebritoo",
+            description = "Android dev"
         )
+    }
+}
 
-        Text(text = name)
-        Text(text = userName)
+@Composable
+fun ShowDetailsAccount(name: String, userName: String, description: String) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Text(text = name, fontSize = 32.sp)
+        Text(text = userName, fontWeight = FontWeight.Bold, fontSize = 18.sp)
         Text(text = description)
     }
 }
@@ -62,10 +98,6 @@ fun ShowDetailsAccount(name: String, userName: String, description: String) {
 @Composable
 fun DefaultPreview() {
     DevHubTheme {
-        ShowDetailsAccount(
-            name = "Michelle Brito",
-            userName = "michellebritoo",
-            description = "Android dev"
-        )
+        SetupUserProfile()
     }
 }
