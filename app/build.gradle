@@ -53,6 +53,7 @@ dependencies {
     implementation "io.coil-kt:coil-compose:$coil_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_version"
     implementation "androidx.activity:activity-compose:$activity_compose_version"
+    implementation "io.coil-kt:coil-compose:2.0.0"
 
     testImplementation "junit:junit:$junit_version"
 

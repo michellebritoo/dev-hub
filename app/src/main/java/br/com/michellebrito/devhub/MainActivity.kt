@@ -3,7 +3,6 @@ package br.com.michellebrito.devhub
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -17,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -25,13 +25,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.michellebrito.devhub.ui.theme.DevHubTheme
-import coil.compose.rememberImagePainter
+import coil.compose.SubcomposeAsyncImage
+import coil.request.ImageRequest
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,26 +52,28 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun SetupUserProfile() {
-    val profileImg = rememberImagePainter(data = "https://avatars.githubusercontent.com/u/70734738?v=4")
-
     Column {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    Color.Gray, shape = RoundedCornerShape(
+                    Color.DarkGray, shape = RoundedCornerShape(
                         bottomStart = 16.dp,
                         bottomEnd = 16.dp
                     )
                 )
                 .height(150.dp)
         ) {
-            Image(
-                painter = profileImg,
-                contentDescription = "foto do usuário",
+            SubcomposeAsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data("https://avatars.githubusercontent.com/u/70734738?v=4")
+                    .crossfade(true)
+                    .build(),
+                loading = { CircularProgressIndicator() },
+                contentDescription = "Foto de perfil do usuário",
                 modifier = Modifier
                     .offset(y = 80.dp)
-                    .border(0.5.dp, MaterialTheme.colors.primary, CircleShape)
+                    .border(0.5.dp, Color.Black, CircleShape)
                     .size(150.dp)
                     .align(Alignment.BottomCenter)
                     .clip(CircleShape)
